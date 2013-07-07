@@ -685,6 +685,7 @@
 
   " smash escape
   inoremap jk <esc>
+  inoremap jj <esc>
   inoremap kj <esc>
 
   " change cursor position in insert mode
@@ -711,8 +712,8 @@
   " }}}
 
   " screen line scroll
-  nnoremap <silent> j gj
-  nnoremap <silent> k gk
+  " nnoremap <silent> j gj
+  " nnoremap <silent> k gk
 
   " auto center {{{
     nnoremap <silent> n nzz
