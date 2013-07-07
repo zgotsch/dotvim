@@ -24,9 +24,9 @@
   let s:settings.autocomplete_method = 'neocomplcache'
   let s:settings.enable_cursorcolumn = 0
   let s:settings.colorscheme = 'jellybeans'
-  if has('patch885') && has('lua')
+  if has('lua')
     let s:settings.autocomplete_method = 'neocomplete'
-  elseif has('patch584') && filereadable(expand("~/.vim/bundle/YouCompleteMe/python/ycm_core.*"))
+  elseif filereadable(expand("~/.vim/bundle/YouCompleteMe/python/ycm_core.*"))
     let s:settings.autocomplete_method = 'ycm'
   endif
 
@@ -36,6 +36,7 @@
   call add(s:settings.plugin_groups, 'javascript')
   call add(s:settings.plugin_groups, 'ruby')
   call add(s:settings.plugin_groups, 'python')
+  call add(s:settings.plugin_groups, 'scala')
   call add(s:settings.plugin_groups, 'go')
   call add(s:settings.plugin_groups, 'scm')
   call add(s:settings.plugin_groups, 'editing')
@@ -51,7 +52,7 @@
 
   " exclude all language-specific plugins by default
   if !exists('g:dotvim_settings.plugin_groups_exclude')
-    let g:dotvim_settings.plugin_groups_exclude = ['web', 'javascript', 'ruby', 'python', 'go']
+    let g:dotvim_settings.plugin_groups_exclude = ['web','javascript','ruby','python','go','scala']
   endif
   for group in g:dotvim_settings.plugin_groups_exclude
     let i = index(s:settings.plugin_groups, group)
@@ -143,7 +144,6 @@
   set showcmd
   set tags=tags;/
   set showfulltag
-  set keywordprg=":help"                              "remap K to vim help
   set modeline
   set modelines=5
 
@@ -237,7 +237,6 @@
   autocmd WinLeave * setlocal nocursorline
   autocmd WinEnter * setlocal cursorline
   let &colorcolumn=s:settings.max_column
-  let &textwidth=s:settings.max_column - 2
   if s:settings.enable_cursorcolumn
     set cursorcolumn
     autocmd WinLeave * setlocal nocursorcolumn
@@ -272,8 +271,6 @@
       set gfn=Ubuntu\ Mono\ 11
     endif
   else
-    set t_Co=256
-
     if $TERM_PROGRAM == 'iTerm.app'
       " different cursors for insert vs normal mode
       if exists('$TMUX')
@@ -329,9 +326,15 @@
     "}}}
   endif "}}}
   if count(s:settings.plugin_groups, 'javascript') "{{{
-    NeoBundleLazy 'teramako/jscomplete-vim', {'autoload':{'filetypes':['javascript']}} "{{{
-      autocmd FileType javascript setlocal omnifunc=jscomplete#CompleteJS
-    "}}}
+    NeoBundleLazy 'marijnh/tern_for_vim', {
+      \ 'autoload': { 'filetypes': ['javascript'] },
+      \ 'build': {
+        \ 'mac': 'npm install',
+        \ 'unix': 'npm install',
+        \ 'cygwin': 'npm install',
+        \ 'windows': 'npm install',
+      \ },
+    \ }
     NeoBundleLazy 'pangloss/vim-javascript', {'autoload':{'filetypes':['javascript']}}
     NeoBundleLazy 'maksimr/vim-jsbeautify', {'autoload':{'filetypes':['javascript']}} "{{{
       nnoremap <leader>fjs :call JsBeautify()<cr>
@@ -354,11 +357,14 @@
       let g:jedi#popup_on_dot=0
     "}}}
   endif "}}}
+  if count(s:settings.plugin_groups, 'scala') "{{{
+    NeoBundle 'derekwyatt/vim-scala'
+    NeoBundle 'megaannum/vimside'
+  endif "}}}
   if count(s:settings.plugin_groups, 'go') "{{{
     NeoBundleLazy 'jnwhiteh/vim-golang', {'autoload':{'filetypes':['go']}}
   endif "}}}
   if count(s:settings.plugin_groups, 'scm') "{{{
-    " NeoBundle 'sjl/splice.vim'
     NeoBundle 'mhinz/vim-signify' "{{{
       let g:signify_update_on_bufenter=0
     "}}}
@@ -443,7 +449,7 @@
   if count(s:settings.plugin_groups, 'editing') "{{{
     NeoBundleLazy 'editorconfig/editorconfig-vim', {'autoload':{'insert':1}}
     NeoBundle 'tpope/vim-speeddating'
-    NeoBundle 'tpope/vim-endwise'
+    NeoBundleLazy 'tpope/vim-endwise', {'autoload':{'filetypes':['lua','ruby','sh','zsh','vb','vbnet','aspvbs','vim','c','cpp','xdefaults']}}
     NeoBundle 'tomtom/tcomment_vim'
     NeoBundle 'terryma/vim-expand-region'
     NeoBundle 'terryma/vim-multiple-cursors'
@@ -464,7 +470,7 @@
       vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
     "}}}
     NeoBundle 'Raimondi/delimitMate' "{{{
-      let delimitMate_expand_cr=1
+      let g:delimitMate_expand_cr=1
       autocmd FileType markdown,vim let b:loaded_delimitMate=1
     "}}}
     NeoBundle 'skwp/vim-easymotion' "{{{
@@ -506,12 +512,6 @@
       nnoremap [ctrlp]o :CtrlPFunky<cr>
       nnoremap [ctrlp]b :CtrlPBuffer<cr>
     "}}}
-    " NeoBundle 'Shougo/vimfiler.vim' "{{{
-    "   let g:vimfiler_as_default_explorer=1
-    "   let g:vimfiler_data_directory='~/.vim/.cache/vimfiler'
-    "   nnoremap <F2> :VimFilerExplorer<CR>
-    "   nnoremap <F3> :VimFilerBufferDir --explorer<CR>
-    " "}}}
     NeoBundleLazy 'scrooloose/nerdtree', {'autoload':{'commands':['NERDTreeToggle','NERDTreeFind']}} "{{{
       let NERDTreeShowHidden=1
       let NERDTreeQuitOnOpen=0
@@ -589,12 +589,6 @@
     "}}}
   endif "}}}
   if count(s:settings.plugin_groups, 'visual') "{{{
-    " NeoBundle 'Lokaltog/vim-powerline' "{{{
-    "   let g:Powerline_symbols = 'unicode'
-    " "}}}
-    " NeoBundle 'Lokaltog/powerline', { 'rtp': 'powerline/bindings/vim' }
-    " NeoBundle 'zhaocai/linepower.vim'
-    " NeoBundle 'myusuf3/numbers.vim', { 'gui': 1 }
     NeoBundle 'kshenoy/vim-signature'
   endif "}}}
   if count(s:settings.plugin_groups, 'indents') "{{{
@@ -642,7 +636,7 @@
       else
         let g:vimshell_editor_command='vim'
       endif
-      let g:vimshell_right_prompt='getcwd()'
+      " let g:vimshell_right_prompt='getcwd()'
       let g:vimshell_temporary_directory='~/.vim/.cache/vimshell'
       let g:vimshell_vimshrc_path='~/.vim/vimshrc'
 
@@ -652,11 +646,6 @@
       let g:goldenview__enable_default_mapping=0
       nmap <F4> <Plug>ToggleGoldenViewAutoResize
     "}}}
-    " NeoBundleLazy 'roman/golden-ratio', {'autoload':{'commands':'GoldenRatioToggle'}} "{{{
-    "   let g:golden_ratio_autocommand=0
-    "   let g:golden_ratio_wrap_ignored=0
-    "   nnoremap <F4> :GoldenRatioToggle<cr>
-    " "}}}
   endif "}}}
   if count(s:settings.plugin_groups, 'windows') "{{{
     NeoBundleLazy 'PProvost/vim-ps1', {'autoload':{'filetypes':['ps1']}} "{{{
@@ -770,7 +759,7 @@
 
   " general
   nmap <leader>l :set list! list?<cr>
-  noremap <cr> :set hlsearch! hlsearch?<cr>
+  nnoremap <cr> :set hlsearch! hlsearch?<cr>
 
   map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
         \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
@@ -796,6 +785,7 @@
   autocmd FileType css,scss nnoremap <silent> <leader>S vi{:sort<CR>
   autocmd FileType python setlocal foldmethod=indent
   autocmd FileType markdown setlocal nolist
+  autocmd FileType vim set keywordprg=":help"
 "}}}
 
 " vundle rtp load sequence requires the filetypes to be loaded after all bundles are loaded
