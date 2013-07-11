@@ -321,9 +321,9 @@
     NeoBundleLazy 'digitaltoad/vim-jade', {'autoload':{'filetypes':['jade']}}
     NeoBundleLazy 'juvenn/mustache.vim', {'autoload':{'filetypes':['mustache']}}
     NeoBundleLazy 'gregsexton/MatchTag', {'autoload':{'filetypes':['html','xml']}}
-    NeoBundleLazy 'mattn/zencoding-vim', {'autoload':{'filetypes':['html','xml','xsl','xslt','xsd','css','sass','scss','less','mustache']}} "{{{
-      autocmd FileType html,xml,xsl,xslt,xsd,css,sass,scss,less,mustache imap <buffer><tab> <c-y>,
-    "}}}
+    " NeoBundleLazy 'mattn/zencoding-vim', {'autoload':{'filetypes':['html','xml','xsl','xslt','xsd','css','sass','scss','less','mustache']}} "{{{
+    "   autocmd FileType html,xml,xsl,xslt,xsd,css,sass,scss,less,mustache imap <buffer><tab> <c-y>,
+    " "}}}
   endif "}}}
   if count(s:settings.plugin_groups, 'javascript') "{{{
     NeoBundleLazy 'marijnh/tern_for_vim', {
@@ -342,7 +342,8 @@
     NeoBundleLazy 'leafgarland/typescript-vim', {'autoload':{'filetypes':['typescript']}}
     NeoBundleLazy 'kchmck/vim-coffee-script', {'autoload':{'filetypes':['coffee']}}
     NeoBundleLazy 'mmalecki/vim-node.js', {'autoload':{'filetypes':['javascript']}}
-    NeoBundleLazy 'leshill/vim-json', {'autoload':{'filetypes':['javascript','json']}}
+    " NeoBundleLazy 'leshill/vim-json', {'autoload':{'filetypes':['javascript','json']}}
+    NeoBundleLazy 'elzr/vim-json', {'autoload':{'filetypes':['javascript','json']}}
     NeoBundleLazy 'othree/javascript-libraries-syntax.vim', {'autoload':{'filetypes':['javascript','coffee','ls','typescript']}}
   endif "}}}
   if count(s:settings.plugin_groups, 'ruby') "{{{
