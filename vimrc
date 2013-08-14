@@ -626,6 +626,7 @@
     endif
     NeoBundleLazy 'guns/xterm-color-table.vim', {'autoload':{'commands':'XtermColorTable'}}
     NeoBundle 'phleet/vim-arcanist'
+    NeoBundle 'chrisbra/vim_faq'
     NeoBundle 'vimwiki'
     NeoBundle 'bufkill.vim'
     NeoBundle 'mhinz/vim-startify' "{{{
