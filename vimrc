@@ -802,7 +802,7 @@
 
   " general
   nmap <leader>l :set list! list?<cr>
-  nnoremap <cr> :set hlsearch! hlsearch?<cr>
+  nnoremap <BS> :set hlsearch! hlsearch?<cr>
 
   " Quickly edit/reload the vimrc file
   nmap <silent> <leader>ev :e $MYVIMRC<CR>
