@@ -845,7 +845,10 @@
 "}}}
 
 " color schemes {{{
-  NeoBundle 'altercation/vim-colors-solarized'
+  NeoBundle 'altercation/vim-colors-solarized' "{{{
+    let g:solarized_termcolors=256
+    let g:solarized_termtrans=1
+  "}}}
   NeoBundle 'nanotech/jellybeans.vim'
   NeoBundle 'tomasr/molokai'
   NeoBundle 'chriskempson/vim-tomorrow-theme'
