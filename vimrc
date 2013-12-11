@@ -299,6 +299,7 @@
       let g:airline#extensions#tabline#enabled = 1
       let g:airline#extensions#tabline#left_sep=' '
       let g:airline#extensions#tabline#left_alt_sep='¦'
+      let g:airline#extensions#tagbar#flags = 'f'
     "}}}
     NeoBundle 'tpope/vim-surround'
     NeoBundle 'tpope/vim-repeat'
@@ -530,7 +531,7 @@
       nnoremap <F2> :NERDTreeToggle<CR>
       nnoremap <F3> :NERDTreeFind<CR>
     "}}}
-    NeoBundleLazy 'majutsushi/tagbar', {'autoload':{'commands':'TagbarToggle'}} "{{{
+    NeoBundle 'majutsushi/tagbar', {'autoload':{'commands':'TagbarToggle'}} "{{{
       nnoremap <silent> <F9> :TagbarToggle<CR>
     "}}}
   endif "}}}
