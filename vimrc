@@ -77,6 +77,8 @@
       let s:settings[key] = g:dotvim_settings[key]
     endif
   endfor
+
+  let g:dvim_sets = s:settings
 "}}}
 
 " setup & neobundle {{{
@@ -371,9 +373,9 @@
     NeoBundleLazy 'klen/python-mode', {'autoload':{'filetypes':['python']}} "{{{
       let g:pymode_rope=0
     "}}}
-    NeoBundleLazy 'davidhalter/jedi-vim', {'autoload':{'filetypes':['python']}} "{{{
-      let g:jedi#popup_on_dot=0
-    "}}}
+    " NeoBundleLazy 'davidhalter/jedi-vim', {'autoload':{'filetypes':['python']}} "{{{
+    "   let g:jedi#popup_on_dot=0
+    " "}}}
   endif "}}}
   if count(s:settings.plugin_groups, 'scala') "{{{
     NeoBundle 'derekwyatt/vim-scala'
@@ -408,7 +410,7 @@
     "}}}
   endif "}}}
   if count(s:settings.plugin_groups, 'autocomplete') "{{{
-    NeoBundle 'honza/vim-snippets'
+    " NeoBundle 'honza/vim-snippets'
     if s:settings.autocomplete_method == 'ycm' "{{{
       NeoBundle 'Valloric/YouCompleteMe', {'vim_version':'7.3.584'} "{{{
         let g:ycm_complete_in_comments_and_strings=1
@@ -448,14 +450,14 @@
     endif "}}}
   endif "}}}
   if count(s:settings.plugin_groups, 'editing') "{{{
-    NeoBundleLazy 'editorconfig/editorconfig-vim', {'autoload':{'insert':1}}
+    " NeoBundleLazy 'editorconfig/editorconfig-vim', {'autoload':{'insert':1}}
     NeoBundle 'tpope/vim-endwise'
     NeoBundle 'tpope/vim-speeddating'
     NeoBundle 'thinca/vim-visualstar'
     NeoBundle 'tomtom/tcomment_vim'
     NeoBundle 'terryma/vim-expand-region'
     NeoBundle 'terryma/vim-multiple-cursors'
-    NeoBundle 'chrisbra/NrrwRgn'
+    " NeoBundle 'chrisbra/NrrwRgn'
     NeoBundle 'dahu/vim-fanfingtastic'
     NeoBundleLazy 'godlygeek/tabular', {'autoload':{'commands':'Tabularize'}} "{{{
       nmap <Leader>a& :Tabularize /&<CR>
@@ -481,11 +483,11 @@
     "}}}
   endif "}}}
   if count(s:settings.plugin_groups, 'navigation') "{{{
-    NeoBundle 'mileszs/ack.vim' "{{{
-      if executable('ag')
-        let g:ackprg = "ag --nogroup --column --smart-case --follow"
-      endif
-    "}}}
+    " NeoBundle 'mileszs/ack.vim' "{{{
+    "   if executable('ag')
+    "     let g:ackprg = "ag --nogroup --column --smart-case --follow"
+    "   endif
+    " "}}}
     NeoBundleLazy 'mbbill/undotree', {'autoload':{'commands':'UndotreeToggle'}} "{{{
       let g:undotree_SplitLocation='botright'
       let g:undotree_SetFocusWhenToggle=1
@@ -497,29 +499,29 @@
       let g:EasyGrepCommand=1
       nnoremap <leader>vo :GrepOptions<cr>
     "}}}
-    NeoBundle 'kien/ctrlp.vim', { 'depends': 'tacahiroy/ctrlp-funky' } "{{{
-      let g:ctrlp_clear_cache_on_exit=1
-      let g:ctrlp_max_height=40
-      let g:ctrlp_show_hidden=0
-      let g:ctrlp_follow_symlinks=1
-      let g:ctrlp_working_path_mode=0
-      let g:ctrlp_max_files=20000
-      let g:ctrlp_cache_dir='~/.vim/.cache/ctrlp'
-      let g:ctrlp_reuse_window='startify'
-      let g:ctrlp_extensions=['funky']
-      if executable('ag')
-        let g:ctrlp_user_command='ag %s -l --nocolor -g ""'
-      endif
+    " NeoBundle 'kien/ctrlp.vim', { 'depends': 'tacahiroy/ctrlp-funky' } "{{{
+    "   let g:ctrlp_clear_cache_on_exit=1
+    "   let g:ctrlp_max_height=40
+    "   let g:ctrlp_show_hidden=0
+    "   let g:ctrlp_follow_symlinks=1
+    "   let g:ctrlp_working_path_mode=0
+    "   let g:ctrlp_max_files=20000
+    "   let g:ctrlp_cache_dir='~/.vim/.cache/ctrlp'
+    "   let g:ctrlp_reuse_window='startify'
+    "   let g:ctrlp_extensions=['funky']
+    "   if executable('ag')
+    "     let g:ctrlp_user_command='ag %s -l --nocolor -g ""'
+    "   endif
 
-      nmap \ [ctrlp]
-      nnoremap [ctrlp] <nop>
+    "   nmap \ [ctrlp]
+    "   nnoremap [ctrlp] <nop>
 
-      nnoremap [ctrlp]t :CtrlPBufTag<cr>
-      nnoremap [ctrlp]T :CtrlPTag<cr>
-      nnoremap [ctrlp]l :CtrlPLine<cr>
-      nnoremap [ctrlp]o :CtrlPFunky<cr>
-      nnoremap [ctrlp]b :CtrlPBuffer<cr>
-    "}}}
+    "   nnoremap [ctrlp]t :CtrlPBufTag<cr>
+    "   nnoremap [ctrlp]T :CtrlPTag<cr>
+    "   nnoremap [ctrlp]l :CtrlPLine<cr>
+    "   nnoremap [ctrlp]o :CtrlPFunky<cr>
+    "   nnoremap [ctrlp]b :CtrlPBuffer<cr>
+    " "}}}
     NeoBundleLazy 'scrooloose/nerdtree', {'autoload':{'commands':['NERDTreeToggle','NERDTreeFind']}} "{{{
       let NERDTreeShowHidden=1
       let NERDTreeQuitOnOpen=0
@@ -548,7 +550,7 @@
       let g:unite_data_directory='~/.vim/.cache/unite'
       let g:unite_enable_start_insert=1
       let g:unite_source_history_yank_enable=1
-      let g:unite_source_rec_max_cache_files=5000
+      let g:unite_source_rec_max_cache_files=10000
       let g:unite_prompt='» '
 
       if executable('ag')
@@ -575,7 +577,7 @@
         nnoremap <silent> [unite]<space> :<C-u>Unite -toggle -auto-resize -buffer-name=mixed file_rec buffer file_mru bookmark<cr><c-u>
         nnoremap <silent> [unite]f :<C-u>Unite -toggle -auto-resize -buffer-name=files file_rec<cr><c-u>
       else
-        nnoremap <silent> [unite]<space> :<C-u>Unite -toggle -auto-resize -buffer-name=mixed file_rec/async buffer file_mru bookmark<cr><c-u>
+        nnoremap <silent> [unite]<space> :<C-u>Unite -toggle -auto-resize -buffer-name=mixed file_mru file_rec/async buffer bookmark<cr><c-u>
         nnoremap <silent> [unite]f :<C-u>Unite -toggle -auto-resize -buffer-name=files file_rec/async<cr><c-u>
       endif
       nnoremap <silent> [unite]y :<C-u>Unite -buffer-name=yanks history/yank<cr>
@@ -631,7 +633,7 @@
     if exists('$TMUX')
       NeoBundle 'christoomey/vim-tmux-navigator'
     endif
-    NeoBundle 'kana/vim-vspec'
+    " NeoBundle 'kana/vim-vspec'
     NeoBundleLazy 'tpope/vim-scriptease', {'autoload':{'filetypes':['vim']}}
     NeoBundleLazy 'tpope/vim-markdown', {'autoload':{'filetypes':['markdown']}}
     if executable('redcarpet') && executable('instant-markdown-d')
@@ -640,7 +642,7 @@
     NeoBundleLazy 'guns/xterm-color-table.vim', {'autoload':{'commands':'XtermColorTable'}}
     NeoBundle 'phleet/vim-arcanist'
     NeoBundle 'chrisbra/vim_faq'
-    NeoBundle 'vimwiki'
+    " NeoBundle 'vimwiki'
     NeoBundle 'bufkill.vim'
     NeoBundle 'mhinz/vim-startify' "{{{
       let g:startify_session_dir = '~/.vim/.cache/sessions'
@@ -708,7 +710,7 @@
   " smash escape
   inoremap jk <esc>
   inoremap jj <esc>
-  inoremap kj <esc>
+  " inoremap kj <esc>
 
   " change cursor position in insert mode
   inoremap <C-h> <left>
@@ -716,9 +718,9 @@
 
   inoremap <C-u> <C-g>u<C-u>
 
-  if mapcheck('<space>/') == ''
-    nnoremap <space>/ :vimgrep //gj **/*<left><left><left><left><left><left><left><left>
-  endif
+  " if mapcheck('<space>/') == ''
+  "   nnoremap <space>/ :vimgrep //gj **/*<left><left><left><left><left><left><left><left>
+  " endif
 
   " sane regex {{{
     nnoremap / /\v
@@ -850,7 +852,7 @@
   NeoBundle 'chriskempson/base16-vim'
   NeoBundle 'w0ng/vim-hybrid'
   NeoBundle 'sjl/badwolf'
-  NeoBundle 'jelera/vim-gummybears-colorscheme'
+  " NeoBundle 'jelera/vim-gummybears-colorscheme'
   NeoBundle 'zeis/vim-kolor' "{{{
     let g:kolor_underlined=1
   "}}}
