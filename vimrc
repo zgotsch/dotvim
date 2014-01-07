@@ -644,6 +644,10 @@
     NeoBundle 'chrisbra/vim_faq'
     " NeoBundle 'vimwiki'
     NeoBundle 'bufkill.vim'
+    NeoBundle 'BufOnly.vim' "{{{
+      nnoremap <leader>bo :BufOnly<cr>
+    "}}}
+
     NeoBundle 'mhinz/vim-startify' "{{{
       let g:startify_session_dir = '~/.vim/.cache/sessions'
       let g:startify_change_to_vcs_root = 1
